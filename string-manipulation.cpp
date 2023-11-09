@@ -37,3 +37,25 @@ int makeAnagram(string a, string b) {
     }
     return min_deletions;
 }
+
+/*
+ * Complete the 'alternatingCharacters' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts STRING s as parameter.
+ */
+int alternatingCharacters(string s) {
+    char current = s[0];
+    int deletions = 0;
+    int current_length = 0;
+    for (int i = 1; i < s.length(); i++) {
+        if (s[i] == current) {
+            current_length++;
+        } else {
+            current = s[i];
+            deletions += current_length;
+            current_length = 0;
+        }
+    }
+    return deletions + current_length;
+}
