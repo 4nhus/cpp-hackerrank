@@ -70,4 +70,23 @@ int sherlockAndAnagrams(string s) {
     return total_count;
 }
 
+// Complete the countTriplets function below.
+long countTriplets(vector<long> arr, long r) {
+    unordered_map<long, long> left_count, right_count;
+    for (long num: arr) {
+        left_count[num]++;
+    }
+    long triplet_count = 0;
+    for (int i = arr.size() - 1; i >= 0; i--) {
+        left_count[arr[i]]--;
+        if (arr[i] % r == 0 && left_count[arr[i] / r] > 0 && right_count[arr[i] * r] > 0) triplet_count +=
+                                                                                                  left_count[arr[i] /
+                                                                                                             r] *
+                                                                                                  right_count[arr[i] *
+                                                                                                              r];
+        right_count[arr[i]]++;
+    }
+    return triplet_count;
+}
+
 
