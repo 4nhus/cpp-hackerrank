@@ -73,3 +73,48 @@ int activityNotifications(vector<int> expenditure, int d) {
     }
     return notifications;
 }
+
+long merge_and_count(vector<int> &arr, int l, int r) {
+    if (l >= r) return 0;
+
+    int m = (l + r) / 2;
+    long l_count = merge_and_count(arr, l, m);
+    long r_count = merge_and_count(arr, m + 1, r);
+    long merge_count = 0;
+    int l_index = l;
+    int r_index = m + 1;
+    vector<int> merge;
+    while (l_index <= m && r_index <= r) {
+        if (arr[r_index] < arr[l_index]) {
+            merge_count += m - l_index + 1;
+            merge.push_back(arr[r_index]);
+            r_index++;
+        } else {
+            merge.push_back(arr[l_index]);
+            l_index++;
+        }
+    }
+    while (l_index <= m) {
+        merge.push_back(arr[l_index]);
+        l_index++;
+    }
+    while (r_index <= r) {
+        merge.push_back(arr[r_index]);
+        r_index++;
+    }
+    for (int i = 0; i < merge.size(); i++) {
+        arr[l + i] = merge[i];
+    }
+
+    return l_count + r_count + merge_count;
+}
+
+/*
+ * Complete the 'countInversions' function below.
+ *
+ * The function is expected to return a LONG_INTEGER.
+ * The function accepts INTEGER_ARRAY arr as parameter.
+ */
+long countInversions(vector<int> arr) {
+    return merge_and_count(arr, 0, arr.size() - 1);
+}
