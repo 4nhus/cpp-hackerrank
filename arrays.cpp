@@ -107,3 +107,21 @@ void minimumBribes(vector<int> q) {
 
     cout << merge_and_count(q, 0, q.size() - 1) << endl;
 }
+
+// Complete the minimumSwaps function below.
+int minimumSwaps(vector<int> arr) {
+    unordered_map<int, int> position_for_number;
+    for (int i = 0; i < arr.size(); i++) {
+        position_for_number[arr[i]] = i;
+    }
+    int num_swaps = 0;
+    for (int i = 0; i < arr.size(); i++) {
+        if (arr[i] == i + 1) continue;
+        int swap_to_position = position_for_number[i + 1];
+        position_for_number[arr[i]] = swap_to_position;
+        swap(arr.at(i), arr.at(position_for_number[i + 1]));
+
+        num_swaps++;
+    }
+    return num_swaps;
+}
