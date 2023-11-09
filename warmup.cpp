@@ -23,3 +23,35 @@ int sockMerchant(int n, vector<int> ar) {
 
     return pairs;
 }
+
+
+/*
+ * Complete the 'countingValleys' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ *  1. INTEGER steps
+ *  2. STRING path
+ */
+int countingValleys(int steps, string path) {
+    int num_valleys = 0;
+    int curr_height = 0;
+    bool reached_sea_level = true;
+    for (char step: path) {
+        if (reached_sea_level && step == 'D') {
+            num_valleys++;
+            reached_sea_level = false;
+            curr_height--;
+        } else if (reached_sea_level) {
+            reached_sea_level = false;
+            curr_height++;
+        } else if (step == 'D') {
+            curr_height--;
+            if (curr_height == 0) reached_sea_level = true;
+        } else {
+            curr_height++;
+            if (curr_height == 0) reached_sea_level = true;
+        }
+    }
+    return num_valleys;
+}
