@@ -81,3 +81,26 @@ int jumpingOnClouds(vector<int> c) {
 
     return minJumps[c.size() - 1];
 }
+
+/*
+ * Complete the 'repeatedString' function below.
+ *
+ * The function is expected to return a LONG_INTEGER.
+ * The function accepts following parameters:
+ *  1. STRING s
+ *  2. LONG_INTEGER n
+ */
+long repeatedString(string s, long n) {
+    long num_a_in_s = 0;
+    for (char c: s) {
+        if (c == 'a') num_a_in_s++;
+    }
+
+    long num_s_repetitions = n / s.length();
+    long num_s_leftover = n % s.length();
+    long num_a_total = num_s_repetitions * num_a_in_s;
+    for (int i = 0; i < num_s_leftover; i++) {
+        if (s[i] == 'a') num_a_total++;
+    }
+    return num_a_total;
+}
