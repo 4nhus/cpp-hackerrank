@@ -79,14 +79,40 @@ long countTriplets(vector<long> arr, long r) {
     long triplet_count = 0;
     for (int i = arr.size() - 1; i >= 0; i--) {
         left_count[arr[i]]--;
-        if (arr[i] % r == 0 && left_count[arr[i] / r] > 0 && right_count[arr[i] * r] > 0) triplet_count +=
-                                                                                                  left_count[arr[i] /
-                                                                                                             r] *
-                                                                                                  right_count[arr[i] *
-                                                                                                              r];
+        if (arr[i] % r == 0 && left_count[arr[i] / r] > 0 && right_count[arr[i] * r] > 0)
+            triplet_count +=
+                    left_count[arr[i] /
+                               r] *
+                    right_count[arr[i] *
+                                r];
         right_count[arr[i]]++;
     }
     return triplet_count;
 }
+
+// Complete the freqQuery function below.
+vector<int> freqQuery(vector<vector<int>> queries) {
+    vector<int> query_results;
+    unordered_map<int, int> counts;
+    unordered_map<int, unordered_set<int>> frequencies;
+    for (auto query : queries) {
+        if (query[0] == 1) {
+            if (counts[query[1]] > 0) frequencies[counts[query[1]]].erase(query[1]);
+            counts[query[1]]++;
+            frequencies[counts[query[1]]].insert(query[1]);
+        } else if (query[0] == 2) {
+            if (counts[query[1]] > 0) {
+                frequencies[counts[query[1]]].erase(query[1]);
+                counts[query[1]]--;
+                frequencies[counts[query[1]]].insert(query[1]);
+            }
+        } else {
+            query_results.push_back(frequencies[query[1]].size() > 0 ? 1 : 0);
+        }
+    }
+    return query_results;
+}
+
+
 
 
