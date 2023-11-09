@@ -21,3 +21,30 @@ int hourglassSum(vector<vector<int>> arr) {
     }
     return max_sum;
 }
+
+/*
+ * Complete the 'rotLeft' function below.
+ *
+ * The function is expected to return an INTEGER_ARRAY.
+ * The function accepts following parameters:
+ *  1. INTEGER_ARRAY a
+ *  2. INTEGER d
+ */
+vector<int> rotLeft(vector<int> a, int d) {
+    // Rotate first (n - d) integers left
+    vector<int> remaining_to_rotate;
+    for (int i = 0; i < d; i++) {
+        remaining_to_rotate.push_back(a[i]);
+    }
+
+    for (int i = 0; i <= a.size() - 1 - d; i++) {
+        a[i] = a[i + d];
+    }
+    int i = a.size() - 1 - d + 1;
+    for (int num: remaining_to_rotate) {
+        a[i] = num;
+        i++;
+    }
+
+    return a;
+}
