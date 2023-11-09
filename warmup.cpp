@@ -55,3 +55,29 @@ int countingValleys(int steps, string path) {
     }
     return num_valleys;
 }
+
+
+/*
+ * Complete the 'jumpingOnClouds' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts INTEGER_ARRAY c as parameter.
+ */
+int jumpingOnClouds(vector<int> c) {
+    if (c.size() < 4) {
+        return 1;
+    }
+
+    vector<int> minJumps(c.size());
+    fill(minJumps.begin(), minJumps.end(), 200);
+    minJumps[0] = 0;
+    if (!c[1]) minJumps[1] = 1;
+    if (!c[2]) minJumps[2] = 1;
+
+    for (int i = 3; i < c.size(); i++) {
+        if (c[i]) continue;
+        minJumps[i] = min(minJumps[i - 1], minJumps[i - 2]) + 1;
+    }
+
+    return minJumps[c.size() - 1];
+}
