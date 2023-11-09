@@ -43,3 +43,33 @@ int maximumToys(vector<int> prices, int k) {
     }
     return num_toys;
 }
+
+/*
+ * Complete the 'activityNotifications' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ *  1. INTEGER_ARRAY expenditure
+ *  2. INTEGER d
+ */
+int activityNotifications(vector<int> expenditure, int d) {
+    int notifications = 0;
+    vector<int> window(expenditure.begin(), expenditure.begin() + d);
+    sort(window.begin(), window.end());
+
+    for (int i = d; i < expenditure.size(); i++) {
+        int double_median;
+        int middle = d / 2;
+        middle--;
+        if (d % 2 == 0) {
+            double_median = window[middle] + window[middle + 1];
+        } else {
+            double_median = window[middle + 1] * 2;
+        }
+        if (expenditure[i] >= double_median) notifications++;
+
+        window.insert(upper_bound(window.begin(), window.end(), expenditure[i]), expenditure[i]);
+        window.erase(lower_bound(window.begin(), window.end(), expenditure[i - d]));
+    }
+    return notifications;
+}
