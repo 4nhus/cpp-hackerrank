@@ -24,3 +24,22 @@ void countSwaps(vector<int> a) {
     cout << "First Element: " << a[0] << endl;
     cout << "Last Element: " << a[a.size() - 1] << endl;
 }
+
+/*
+ * Complete the 'maximumToys' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ *  1. INTEGER_ARRAY prices
+ *  2. INTEGER k
+ */
+int maximumToys(vector<int> prices, int k) {
+    sort(prices.begin(), prices.end());
+    int num_toys = 0;
+    for (int price: prices) {
+        if (k - price < 0) break;
+        k -= price;
+        num_toys++;
+    }
+    return num_toys;
+}
