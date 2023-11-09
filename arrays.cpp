@@ -125,3 +125,26 @@ int minimumSwaps(vector<int> arr) {
     }
     return num_swaps;
 }
+
+/*
+ * Complete the 'arrayManipulation' function below.
+ *
+ * The function is expected to return a LONG_INTEGER.
+ * The function accepts following parameters:
+ *  1. INTEGER n
+ *  2. 2D_INTEGER_ARRAY queries
+ */
+long arrayManipulation(int n, vector<vector<int>> queries) {
+    vector<long long> array(n, 0);
+    for (auto query: queries) {
+        array[query[0] - 1] += query[2];
+        if (query[1] != n) array[query[1]] -= query[2];
+    }
+    long long max = array[0];
+    for (int i = 1; i < n; i++) {
+        array[i] = array[i - 1] + array[i];
+        if (array[i] > max) max = array[i];
+    }
+
+    return max;
+}
