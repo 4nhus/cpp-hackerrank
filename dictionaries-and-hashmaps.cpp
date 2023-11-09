@@ -45,4 +45,29 @@ string twoStrings(string s1, string s2) {
     return "NO";
 }
 
+/*
+ * Complete the 'sherlockAndAnagrams' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts STRING s as parameter.
+ */
+int sherlockAndAnagrams(string s) {
+    int total_count = 0;
+    unordered_map<string, int> substring_counts;
+    for (int substring_size = 1; substring_size < s.length(); substring_size++) {
+        for (int substring_start = 0; substring_start < s.length() - substring_size + 1; substring_start++) {
+            string substring = s.substr(substring_start, substring_size);
+            sort(substring.begin(), substring.end());
+            substring_counts[substring]++;
+        }
+        for (auto substring_count: substring_counts) {
+            if (substring_count.second > 1) {
+                total_count += (substring_count.second * (substring_count.second - 1)) / 2;
+            }
+        }
+        substring_counts.clear();
+    }
+    return total_count;
+}
+
 
