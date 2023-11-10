@@ -1,6 +1,7 @@
 #include <iostream>;
 #include <vector>;
 #include <set>;
+#include <map>;
 
 using namespace std;
 
@@ -58,4 +59,38 @@ int alternatingCharacters(string s) {
         }
     }
     return deletions + current_length;
+}
+
+/*
+ * Complete the 'isValid' function below.
+ *
+ * The function is expected to return a STRING.
+ * The function accepts STRING s as parameter.
+ */
+string isValid(string s) {
+    unordered_map<char, int> frequencies;
+    for (char c: s) {
+        frequencies[c]++;
+    }
+    map<int, int> frequency_frequencies;
+    for (auto frequency: frequencies) {
+        frequency_frequencies[frequency.second]++;
+    }
+    if (frequency_frequencies.size() > 2) return "NO";
+    if (frequency_frequencies.size() == 1) return "YES";
+    auto first_frequency_it = frequency_frequencies.begin();
+
+    pair<int, int> first_frequency = *first_frequency_it;
+    pair<int, int> second_frequency = *(++first_frequency_it);
+    if (second_frequency.first - first_frequency.first > 1 && first_frequency.second != 1) return "NO";
+
+    if (first_frequency.second > 1 && second_frequency.second > 1) {
+        return "NO";
+    } else if (first_frequency.second > 1 && second_frequency.second == 1) {
+        return "YES";
+    } else if (first_frequency.second == 1 && second_frequency.second > 1) {
+        return "YES";
+    } else {
+        return "YES";
+    }
 }
