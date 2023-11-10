@@ -45,3 +45,18 @@ int luckBalance(int k, vector<vector<int>> contests) {
     }
     return luck;
 }
+
+// Complete the getMinimumCost function below.
+int getMinimumCost(int k, vector<int> c) {
+    int minimum_cost = 0;
+    sort(c.begin(), c.end(), greater<int>());
+    vector<int> purchases_per_friend(k, 0);
+    int current_friend = 0;
+    for (int cost: c) {
+        minimum_cost += (purchases_per_friend[current_friend] + 1) * cost;
+        purchases_per_friend[current_friend]++;
+        current_friend++;
+        if (current_friend == k) current_friend = 0;
+    }
+    return minimum_cost;
+}
