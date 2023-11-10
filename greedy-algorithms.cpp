@@ -19,3 +19,29 @@ int minimumAbsoluteDifference(vector<int> arr) {
     }
     return minimum;
 }
+
+/*
+ * Complete the 'luckBalance' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ *  1. INTEGER k
+ *  2. 2D_INTEGER_ARRAY contests
+ */
+int luckBalance(int k, vector<vector<int>> contests) {
+    vector<int> important_contests;
+    int luck = 0;
+    for (auto contest: contests) {
+        if (contest[1]) {
+            important_contests.push_back(contest[0]);
+        } else {
+            luck += contest[0];
+        }
+    }
+    sort(important_contests.begin(), important_contests.end(), greater<int>());
+    for (auto important_contest: important_contests) {
+        luck += k > 0 ? important_contest : -important_contest;
+        k--;
+    }
+    return luck;
+}
