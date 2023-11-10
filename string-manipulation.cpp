@@ -94,3 +94,49 @@ string isValid(string s) {
         return "YES";
     }
 }
+
+/*
+ * Complete the 'substrCount' function below.
+ *
+ * The function is expected to return a LONG_INTEGER.
+ * The function accepts following parameters:
+ *  1. INTEGER n
+ *  2. STRING s
+ */
+long substrCount(int n, string s) {
+    unordered_map<char, unordered_map<long, set<long>>> map_char_to_length_to_indices;
+    char current_char = 0;
+    long current_length = 0;
+    for (long i = 0; i < s.length(); i++) {
+        if (s[i] != current_char) {
+            current_char = s[i];
+            current_length = 1;
+            map_char_to_length_to_indices[current_char][current_length].insert(i);
+        } else {
+            current_length++;
+            for (long j = 1; j <= current_length; j++) {
+                map_char_to_length_to_indices[current_char][j].insert(i - j + 1);
+            }
+        }
+    }
+    long count = 0;
+    for (auto char_to_length_to_indices: map_char_to_length_to_indices) {
+        for (auto length_to_indices: char_to_length_to_indices.second) {
+            count += length_to_indices.second.size();
+            // Iterate through set to find all pairs of indices that are sufficiently spaced (1 + length)
+            bool iterated_over_first = false;
+            long prev;
+            for (long index: length_to_indices.second) {
+                if (!iterated_over_first) {
+                    prev = index;
+                    iterated_over_first = true;
+                    continue;
+                }
+
+                if (index - prev == length_to_indices.first + 1) count++;
+                prev = index;
+            }
+        }
+    }
+    return count;
+}
