@@ -60,3 +60,20 @@ int getMinimumCost(int k, vector<int> c) {
     }
     return minimum_cost;
 }
+
+/*
+ * Complete the 'maxMin' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ *  1. INTEGER k
+ *  2. INTEGER_ARRAY arr
+ */
+int maxMin(int k, vector<int> arr) {
+    sort(arr.begin(), arr.end());
+    int min_unfairness = arr[k - 1] - arr[0];
+    for (int i = k; i < arr.size(); i++) {
+        min_unfairness = min(min_unfairness, arr[i] - arr[i - k + 1]);
+    }
+    return min_unfairness;
+}
